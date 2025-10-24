@@ -14,7 +14,7 @@ export const HomePageComponent = () => {
   return (
     <div className="homepage">
       <div className="homepage__attribution">
-        <h2>🚀 Created by <strong>MaxVelocity</strong> under MIT License</h2>
+        <h2>🚀 Created by <strong>Max Velocity Labs</strong> under MIT License</h2>
         <p>Use it as you wish! This boilerplate is designed to kickstart your React projects with modern best practices.</p>
       </div>
 

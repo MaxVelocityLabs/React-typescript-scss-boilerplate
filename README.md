@@ -288,7 +288,7 @@ You can safely remove these demo files and components:
 
 ## License
 
-**Created by MaxVelocity** under MIT License
+**Created by Max Velocity Labs** under MIT License
 
 Use it as you wish! This boilerplate is designed to kickstart your React projects with modern best practices.
 
