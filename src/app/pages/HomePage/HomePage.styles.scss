@@ -1,0 +1,209 @@
+// Homepage component styles using BEM methodology
+.homepage {
+  min-height: 100vh;
+  padding: 1.5rem;
+  max-width: 120rem;
+  margin: 0 auto;
+  font-family: inherit;
+
+  &__attribution {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 0.8rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0.4rem 1.5rem rgba(102, 126, 234, 0.3);
+
+    h2 {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 1.4rem;
+      opacity: 0.9;
+      margin: 0;
+    }
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+    border-bottom: 0.1rem solid #e0e0e0;
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 0.8rem;
+      color: #333;
+    }
+
+    p {
+      font-size: 1.4rem;
+      color: #666;
+      max-width: 60rem;
+      margin: 0 auto;
+    }
+  }
+
+  &__content {
+    margin-bottom: 2.5rem;
+  }
+
+  &__section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-radius: 0.6rem;
+    border-left: 0.4rem solid #007bff;
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 0.8rem;
+        padding-left: 0.8rem;
+        position: relative;
+        font-size: 1.5rem;
+        line-height: 1.6;
+
+        &::before {
+          content: '•';
+          color: #007bff;
+          font-weight: bold;
+          position: absolute;
+          left: 0;
+        }
+      }
+    }
+
+    p {
+      font-size: 1.6rem;
+      line-height: 1.7;
+      color: #555;
+      margin-bottom: 0.8rem;
+    }
+
+    code {
+      background: #f0f0f0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.3rem;
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      color: #d63384;
+    }
+  }
+
+  &__code {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 1.5rem;
+    border-radius: 0.6rem;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    margin: 0.8rem 0;
+    border: 0.1rem solid #4a5568;
+  }
+
+  &__scripts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    gap: 0.8rem;
+    margin-top: 0.8rem;
+  }
+
+  &__script {
+    background: white;
+    padding: 0.8rem;
+    border-radius: 0.4rem;
+    border: 0.1rem solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    code {
+      background: #f8f9fa;
+      padding: 0.4rem;
+      border-radius: 0.3rem;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    span {
+      font-size: 1.4rem;
+      color: #666;
+      line-height: 1.5;
+    }
+  }
+
+  &__footer {
+    text-align: center;
+    padding: 1.5rem 0;
+    border-top: 0.1rem solid #e0e0e0;
+    background: #f8f9fa;
+    border-radius: 0.6rem;
+    margin-top: 1.5rem;
+
+    p {
+      margin: 0.4rem 0;
+      font-size: 1.3rem;
+      color: #666;
+
+      strong {
+        color: #333;
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .homepage {
+    padding: 1rem;
+
+    &__attribution {
+      padding: 1.5rem;
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1.4rem;
+      }
+    }
+
+    &__header {
+      h1 {
+        font-size: 2.4rem;
+      }
+
+      p {
+        font-size: 1.4rem;
+      }
+    }
+
+    &__section {
+      padding: 1.5rem;
+
+      h2 {
+        font-size: 2rem;
+      }
+    }
+
+    &__scripts {
+      grid-template-columns: 1fr;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    /* Path mapping */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@app/*": ["./src/app/*"],
+      "@shared/*": ["./src/app/shared/*"],
+      "@core/*": ["./src/app/core/*"],
+      "@styles/*": ["./src/app/styles/*"],
+      "@components/*": ["./src/app/shared/components/*"],
+      "@utils/*": ["./src/app/shared/utils/*"],
+      "@constants/*": ["./src/app/core/constants/*"],
+      "@assets/*": ["./src/assets/*"]
+    }
+  }
+}

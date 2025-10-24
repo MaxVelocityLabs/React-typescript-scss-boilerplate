@@ -1,0 +1,484 @@
+---
+alwaysApply: true
+---
+
+# Project Setup Rules
+
+## ESLint Configuration
+Always setup ESLint with proper JSON configuration including import sorting and grouping rules for React projects.
+
+**Required ESLint Rules:**
+- Import sorting and grouping (external, internal, relative)
+- React-specific linting rules
+- TypeScript support
+- Consistent code formatting
+
+**ESLint Configuration Example:**
+```json
+{
+  "extends": [
+    "eslint:recommended",
+    "@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
+  ],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+    "import"
+  ],
+  "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**",
+            "group": "internal"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"]
+      }
+    ],
+    "import/no-unresolved": "error",
+    "import/no-duplicates": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  }
+}
+```
+
+**Import Order Examples:**
+- ❌ Mixed imports: `import { useState } from 'react'; import { Button } from './Button'; import axios from 'axios';`
+- ✅ Grouped imports:
+```typescript
+// External libraries
+import axios from 'axios';
+import React, { useState } from 'react';
+
+// Internal modules
+import { Button } from '@components/Button';
+import { API_SERVICE } from '@services/api';
+
+// Relative imports
+import './Component.styles.scss';
+```
+
+## File Naming Convention
+Always use type prefixes for all file types to immediately identify their purpose and maintain consistency.
+
+**Required File Naming Pattern:**
+- Use descriptive type prefixes before the main name
+- Follow the pattern: `TypeName.type.ts` or `TypeName.type.tsx`
+
+**File Type Examples:**
+- **Components**: `Button.component.tsx`, `Header.component.tsx`
+- **Containers**: `SearchContainer.container.tsx`, `UserDashboard.container.tsx`
+- **Services**: `ApiService.service.ts`, `AuthService.service.ts`
+- **Hooks**: `useAuth.hook.ts`, `useLocalStorage.hook.ts`
+- **Types**: `User.type.ts`, `ApiResponse.type.ts`
+- **Utils**: `formatDate.util.ts`, `validateEmail.util.ts`
+- **Constants**: `AppConstants.const.ts`, `ThemeConstants.const.ts`
+- **Styles**: `Button.styles.scss`, `Home.styles.scss`
+- **Stores**: `UserStore.store.ts`, `AuthStore.store.ts`
+- **Providers**: `ThemeProvider.provider.tsx`, `AuthProvider.provider.tsx`
+- **Config**: `DatabaseConfig.config.ts`, `AppConfig.config.ts`
+
+**Examples:**
+- ❌ Generic names: `Button.tsx`, `api.ts`, `types.ts`, `SearchContainer.tsx`
+- ✅ Type-prefixed names: `Button.component.tsx`, `ApiService.service.ts`, `User.type.ts`, `SearchContainer.container.tsx`
+- ❌ Inconsistent naming: `Button.tsx`, `authService.ts`, `UserTypes.ts`, `SearchContainer.component.tsx`
+- ✅ Consistent naming: `Button.component.tsx`, `AuthService.service.ts`, `User.type.ts`, `SearchContainer.container.tsx`
+
+## SCSS 7-1 Folder Structure
+Always setup the 7-1 SCSS architecture with proper folder organization for scalable styling.
+
+**Important:** This SCSS folder structure is ONLY for shared code. Component-specific, page-specific, and module-specific styles should be written as separate SCSS files near their respective components/pages/modules.
+
+**Required Folder Structure:**
+```
+src/styles/
+├── abstracts/
+│   ├── _variables.scss
+│   ├── _functions.scss
+│   ├── _mixins.scss
+│   └── _placeholders.scss
+├── vendors/
+│   └── _normalize.scss
+├── base/
+│   ├── _reset.scss
+│   ├── _typography.scss
+│   └── _base.scss
+├── themes/
+│   ├── _dark.scss
+│   └── _light.scss
+└── main.scss
+```
+
+**SCSS Import Order in main.scss:**
+```scss
+// 1. Abstracts
+@import 'abstracts/variables';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+@import 'abstracts/placeholders';
+
+// 2. Vendors
+@import 'vendors/normalize';
+
+// 3. Base
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/base';
+
+// 5. Components (only if components folder exists)
+// @import 'components/button';
+// @import 'components/card';
+// @import 'components/form';
+// @import 'components/modal';
+// @import 'components/tooltip';
+
+// 6. Pages (only if pages folder exists)
+// @import 'pages/home';
+// @import 'pages/about';
+// @import 'pages/contact';
+
+// 7. Themes
+@import 'themes/dark';
+@import 'themes/light';
+```
+
+**SCSS File Organization Rules:**
+- Abstracts: Variables, functions, mixins, placeholders
+- Vendors: Third-party CSS (normalize, reset, etc.)
+- Base: Base styles, typography, reset
+- Themes: Theme variations (dark/light mode)
+
+**SCSS File Placement Rules:**
+- **Shared styles**: Use the 7-1 folder structure (`src/app/styles/`)
+- **Component styles**: Create `.styles.scss` files next to components (`src/app/shared/components/Button/Button.styles.scss`)
+- **Page styles**: Create `.styles.scss` files next to pages (`src/app/modules/Home/Home.styles.scss`)
+- **Module styles**: Create `.styles.scss` files next to modules (`src/app/modules/Auth/Auth.styles.scss`)
+
+**Examples:**
+- ✅ Component styles next to component: `src/app/shared/components/Button/Button.styles.scss`
+- ✅ Page styles next to page: `src/app/modules/Home/Home.styles.scss`
+- ✅ Shared styles in app: `src/app/styles/abstracts/_variables.scss`
+
+## Path Aliases Configuration
+Always setup comprehensive path aliases for clean imports and better code organization.
+
+**Required Aliases:**
+- `@/` - Root source directory
+- `@app/` - App-level code and core business logic
+- `@shared/` - Shared services, hooks, types, and utilities
+- `@components/` - React components
+- `@styles/` - SCSS files and styles
+- `@assets/` - Static assets (images, icons, etc.)
+
+**TypeScript Configuration (tsconfig.json):**
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
+      "@assets/*": ["src/assets/*"]
+    }
+  }
+}
+```
+
+**Vite Configuration (vite.config.ts):**
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    // Enable Hot Module Replacement (HMR)
+    hmr: true,
+    // Configure HMR for better reliability
+    hmr: {
+      overlay: true, // Show error overlay in browser
+      clientPort: 5173, // Default Vite port
+    },
+    // File watching configuration for hot reload
+    watch: {
+      usePolling: true, // Enable polling for file changes (better for WSL/Docker)
+      interval: 1000, // Polling interval in milliseconds
+      ignored: ['**/node_modules/**', '**/dist/**'], // Ignore these directories
+    },
+    // Development server options
+    port: 5173,
+    host: true, // Allow external connections
+    open: true, // Automatically open browser
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+      '@app': path.resolve(__dirname, './src/app'),
+      '@shared': path.resolve(__dirname, './src/app/shared'),
+      '@components': path.resolve(__dirname, './src/components'),
+      '@styles': path.resolve(__dirname, './src/styles'),
+      '@assets': path.resolve(__dirname, './src/assets')
+    }
+  }
+});
+```
+
+## Hot Reload Configuration
+Always configure comprehensive hot reload settings in Vite for optimal development experience.
+
+**Required Hot Reload Features:**
+- Hot Module Replacement (HMR) enabled
+- Error overlay in browser for debugging
+- File watching with polling for WSL/Docker compatibility
+- Automatic browser opening
+- External connection support
+
+**Hot Reload Benefits:**
+- Instant code changes without full page refresh
+- Preserves component state during updates
+- Faster development iteration
+- Better debugging with error overlays
+- Cross-platform compatibility (Windows, WSL, Docker)
+
+**Configuration Details:**
+- `hmr: true` - Enables Hot Module Replacement
+- `hmr.overlay: true` - Shows error overlay in browser
+- `watch.usePolling: true` - Uses polling for file changes (essential for WSL/Docker)
+- `watch.interval: 1000` - Polling interval for file changes
+- `host: true` - Allows external connections (useful for mobile testing)
+- `open: true` - Automatically opens browser on start
+
+**Examples:**
+- ❌ Basic config without hot reload: `plugins: [react()]`
+- ✅ Full hot reload config: Complete server configuration with HMR and watching
+- ❌ Missing polling: `watch: { usePolling: false }` (breaks on WSL/Docker)
+- ✅ Polling enabled: `watch: { usePolling: true, interval: 1000 }`
+
+**Import Examples with Aliases:**
+- ❌ Relative imports: `import { Button } from '../../../components/Button'`
+- ✅ Alias imports: `import { Button } from '@components/Button'`
+- ❌ Mixed paths: `import { api } from '../../services/api'`
+- ✅ Consistent aliases: `import { api } from '@shared/services/api'`
+- ❌ Wrong shared location: `import { useAuth } from '@hooks/useAuth'`
+- ✅ Correct shared location: `import { useAuth } from '@shared/hooks/useAuth'`
+
+## Project Structure Standards
+Always maintain consistent project structure following established patterns.
+
+**Required Directory Structure:**
+```
+src/
+├── app/                 # All application code
+│   ├── App.tsx          # Main App component
+│   ├── App.scss         # Main App styles
+│   ├── core/            # Core business logic and app-level code
+│   │   ├── stores/      # State management
+│   │   ├── providers/   # Context providers
+│   │   └── config/      # App configuration
+│   ├── shared/          # Shared services, hooks, types, and utilities
+│   │   ├── services/     # API services and external integrations
+│   │   ├── hooks/        # Custom React hooks
+│   │   ├── types/        # TypeScript type definitions
+│   │   ├── utils/        # Utility functions
+│   │   ├── constants/    # Application constants
+│   │   └── components/   # Shared components
+│   │       ├── Button/
+│   │       │   ├── Button.component.tsx
+│   │       │   ├── Button.styles.scss
+│   │       │   └── Button.const.ts
+│   │       └── Header/
+│   ├── modules/         # Page components and modules
+│   │   ├── Home/
+│   │   │   ├── Home.container.tsx
+│   │   │   └── index.ts
+│   │   ├── Auth/
+│   │   │   ├── Auth.container.tsx
+│   │   │   └── index.ts
+│   │   ├── SearchContainer/
+│   │   │   ├── SearchContainer.container.tsx
+│   │   │   └── index.ts
+│   │   └── Dashboard/
+│   │       ├── Dashboard.container.tsx
+│   │       └── index.ts
+│   └── styles/          # SCSS files (7-1 structure)
+├── assets/              # Static assets (images, icons, etc.)
+├── main.tsx             # Root entry point
+└── index.scss           # Root HTML file
+```
+
+**Folder Organization Rules:**
+- **Main App files**: Goes in `src/app/` (App.tsx, App.scss)
+- **App-level code**: Goes in `src/app/core/` (stores, providers, config)
+- **Shared resources**: Goes in `src/app/shared/` (services, hooks, types, utils, constants, components)
+- **Page/Module-specific**: Goes in `src/app/modules/` (Home, Auth, Dashboard, etc.)
+- **Containers**: Use `.container.tsx` suffix for module containers
+- **Shared styles**: Goes in `src/app/styles/` (7-1 SCSS structure)
+- **Static assets**: Goes in `src/assets/` (images, icons, etc.)
+- **Root files**: `main.tsx` and `index.scss` stay at `src/` level
+
+## Package.json Scripts
+Always include essential scripts for development, building, and linting.
+
+**Required Scripts:**
+```json
+{
+  "scripts": {
+    "start": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --ext ts,tsx --fix",
+    "type-check": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,scss,css}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,scss,css}\""
+  }
+}
+```
+
+## Development Dependencies
+Always include essential development dependencies for a complete React TypeScript setup.
+
+**Required Dev Dependencies:**
+```json
+{
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^3.0.0",
+    "sass": "^1.64.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  }
+}
+```
+
+## Environment Configuration
+Always setup proper environment variable handling with type safety.
+
+**Environment Variables Setup:**
+- Create `.env` file for local development
+- Create `.env.example` with template variables
+- Use `import.meta.env.VITE_*` for Vite environment variables
+- Add TypeScript definitions for environment variables
+
+**Example .env:**
+```
+VITE_API_URL=http://localhost:3000/api
+VITE_APP_TITLE=My App
+VITE_DEBUG=true
+```
+
+**Example .env.example:**
+```
+VITE_API_URL=your_api_url_here
+VITE_APP_TITLE=Your App Title
+VITE_DEBUG=false
+```
+
+## Code Quality Tools
+Always setup comprehensive code quality tools for consistent development.
+
+**Required Tools:**
+- ESLint for code linting
+- Prettier for code formatting
+- TypeScript for type checking
+- Sass for SCSS compilation
+- Import sorting and grouping rules
+
+**Prettier Configuration (.prettierrc):**
+```json
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false
+}
+```
+
+**Prettier Ignore (.prettierignore):**
+```
+node_modules
+dist
+build
+coverage
+*.min.js
+*.min.css
+```
+
+## Setup Validation
+Always validate that all setup components are working correctly.
+
+**Validation Checklist:**
+- ✅ ESLint runs without errors
+- ✅ TypeScript compilation succeeds
+- ✅ SCSS compilation works
+- ✅ Path aliases resolve correctly
+- ✅ Import sorting works as expected
+- ✅ Hot reload works correctly (HMR enabled)
+- ✅ File watching works with polling (WSL/Docker compatible)
+- ✅ Error overlay displays in browser
+- ✅ All required dependencies are installed
+- ✅ Environment variables are accessible
+- ✅ Build process completes successfully
+
+**Examples:**
+- ❌ Missing ESLint configuration
+- ❌ Broken path aliases
+- ❌ Incomplete SCSS folder structure
+- ❌ Missing TypeScript types
+- ✅ Complete setup with all tools working
+- ✅ Proper import organization
+- ✅ Consistent code formatting

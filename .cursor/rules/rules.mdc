@@ -1,0 +1,220 @@
+---
+alwaysApply: true
+---
+
+# React Typescript Scss Boilerplate Rules
+
+## Path Aliases
+Always use path aliases instead of relative paths for imports. Use @app, @shared, @core, @styles, @components aliases.
+
+**Examples:**
+- ❌ `import { Component } from '../../../shared/components/Component'`
+- ✅ `import { Component } from '@components/Component'`
+
+## BEM CSS Naming
+Use BEM methodology for CSS class naming. Use double underscores for elements, double hyphens for modifiers.
+
+**Examples:**
+- ❌ `.topbarLeft`, `.sidebarContent`, `.tileTitle`
+- ✅ `.topbar__left`, `.sidebar__content`, `.tile__title`
+
+## File Naming Convention
+All files must follow the suffix naming convention based on their purpose. Use descriptive suffixes to immediately identify file types.
+
+**Examples:**
+- ❌ `Button.tsx`, `App.const.ts`, `navigation.util.ts`
+- ✅ `Button.component.tsx`, `App.const.ts`, `navigation.util.ts`
+
+**Suffix Types:**
+- `.component.tsx` - React components with JSX
+- `.const.ts` - Constants, enums, configuration objects
+- `.util.ts` - Utility functions, helpers, pure functions
+- `.service.ts` - Service classes, API clients
+- `.hook.ts` - Custom React hooks
+- `.type.ts` - TypeScript type definitions
+- `.module.scss` - CSS modules for components
+
+## Component Structure
+Each component should have its own folder with proper structure. Create ComponentName/ folder with ComponentName.component.tsx, ComponentName.module.scss, ComponentName.const.ts.
+
+**Examples:**
+- ❌ `src/components/Button.tsx`
+- ✅ `src/components/Button/Button.component.tsx`, `Button.module.scss`, `Button.const.ts`
+
+## Constants Files
+Create dedicated .const.ts files for component-specific constants. Extract constants to ComponentName.const.ts files.
+
+**Examples:**
+- ❌ `const TITLE = 'My Title'` inside component
+- ✅ `export const COMPONENT_CONSTANTS = { TITLE: 'My Title' }` in .const.ts
+
+## Environment Variables
+Use environment variables for sensitive configuration. Store in .env file and use import.meta.env.VITE_*.
+
+**Examples:**
+- ❌ `apiKey: 'AIzaSyDfNk0kTPZ5bK7zwQFVmb5AP480RnbGYgM'`
+- ✅ `apiKey: import.meta.env.VITE_FIREBASE_API_KEY`
+
+## SCSS Architecture
+Follow 7-1 SCSS architecture for shared styles, CSS modules for components. Use CSS modules (.module.scss) for component-specific styles.
+
+**Examples:**
+- ❌ `.my-component` styles in main.scss
+- ✅ `.my-component` styles in ComponentName.module.scss
+
+## Rem Units
+Use rem units with 62.5% base font-size. Use rem units (1rem = 10px with 62.5% base).
+
+**Examples:**
+- ❌ `font-size: 16px; padding: 8px;`
+- ✅ `font-size: 1.6rem; padding: 0.8rem;`
+
+## Single Responsibility
+Each function should have a single, well-defined purpose. Split into separate functions with clear purposes.
+
+## Clean Imports
+Remove unused imports and clean up formatting. Remove unused imports and clean up spacing.
+
+**Examples:**
+- ❌ `import { unused } from 'library'`
+- ✅ Remove unused imports entirely
+
+## Component State Management Patterns
+Use React Context for cross-component communication instead of prop drilling. Move forms inside components that use them.
+
+**Patterns:**
+- Move forms inside components that manage their state
+- Use Context for event passing between distant components
+- Eliminate unnecessary prop drilling through intermediate components
+
+**Examples:**
+- ❌ Prop drilling: `App -> MainLayout -> RightSidebar -> SectionManager`
+- ✅ Context pattern: `RightSidebar -> Context -> SectionManager`
+
+## No Inline Styles
+Avoid inline styles in JSX. Use CSS classes or CSS modules instead for better maintainability and consistency.
+
+**Patterns:**
+- Use CSS modules for component-specific styles
+- Use global CSS classes for reusable styles
+- Extract complex styling logic to SCSS files
+- Maintain design system consistency through classes
+
+**Examples:**
+- ❌ Inline styles: `<div style={{ marginBottom: '16px', color: '#666' }}>`
+- ✅ CSS classes: `<div className={styles.container}>` with `.container { margin-bottom: 1.6rem; color: var(--text-muted); }`
+
+## Preserve User Changes
+Before making any changes to existing files, always check for user-made modifications and preserve them. Do not modify or overwrite user changes without explicit permission.
+
+**Patterns:**
+- Always read the current file content before making changes
+- Identify user-made modifications vs. generated code
+- Preserve user customizations, inline styles, and manual adjustments
+- Ask for permission before removing or modifying user changes
+- Document any necessary changes that might affect user modifications
+
+**Examples:**
+- ❌ Overwriting user's custom CSS without checking
+- ❌ Removing user's inline styles that were intentionally added
+- ❌ Modifying user's manual configurations
+- ✅ Preserving user's custom styling and configurations
+- ✅ Asking permission before making changes that affect user modifications
+
+## Code Cleanup
+Remove any unused code, files, unnecessary code, and redundant code. Keep the codebase lean and maintainable.
+
+**Patterns:**
+- Remove unused functions, variables, and exports
+- Delete unused files and modules
+- Eliminate redundant code patterns
+- Remove debug code (console.log statements) from production
+- Clean up commented-out code
+- Remove unused imports and dependencies
+
+## File Creation
+Never use terminal commands like `echo` to create files. Always provide complete code blocks for manual file creation.
+
+**Patterns:**
+- Provide complete file content for copy-paste
+- Use proper file creation methods (IDE, manual creation)
+- Never use `echo` or similar terminal commands for file creation
+- Guide users to create files manually when needed
+
+## SCSS Variable Management
+Always use defined SCSS variables and avoid hardcoded values. Remove unused variables to keep the codebase clean.
+
+**Patterns:**
+- Use only defined variables from `_variables.scss`
+- Remove unused SCSS variables during cleanup
+- Replace undefined variables with available alternatives
+- Keep variable definitions minimal and purposeful
+
+**Examples:**
+- ❌ Using undefined variables: `gap: $spacing-3;` (when $spacing-3 doesn't exist)
+- ✅ Using defined variables: `gap: $spacing-2;` or `gap: $spacing-4;`
+- ❌ Hardcoded values: `padding: 1.2rem;`
+- ✅ Using variables: `padding: $spacing-4;`
+
+## UI Library Theme Overrides
+Always follow component or UI library design-specific methods to override themes or CSS. Do not assume overriding things with generic SCSS approaches.
+
+**Patterns:**
+- Use library-specific theme configuration APIs (e.g., Ant Design theme tokens, Material-UI theme provider)
+- Follow component-specific customization methods (e.g., Ant Design component props, Material-UI sx prop)
+- Use CSS custom properties when supported by the library
+- Avoid generic SCSS overrides that break library design patterns
+- Respect library's design system and customization guidelines
+
+**Examples:**
+- ❌ Generic SCSS override: `.ant-btn { background: #custom-color !important; }`
+- ✅ Ant Design theme: `theme: { token: { colorPrimary: '#custom-color' } }`
+- ❌ Generic CSS override: `.mui-button { color: red !important; }`
+- ✅ Material-UI sx prop: `<Button sx={{ color: 'red' }}>`
+- ❌ Breaking library patterns: Overriding internal component classes
+- ✅ Following library patterns: Using provided customization APIs
+
+## Ant Design Theme Configuration
+Use consistent theme configuration for Ant Design components. Apply primary colors globally and avoid component-specific overrides.
+
+**Patterns:**
+- Define primary colors in theme constants
+- Apply colors globally through Ant Design theme tokens
+- Use CSS overrides only when theme configuration fails
+- Maintain consistent color scheme across all components
+
+**Examples:**
+- ❌ Component-specific color overrides: `background: #1668dc !important;`
+- ✅ Global theme configuration: `colorPrimary: THEME_CONSTANTS.COLORS.COMMON.primary`
+- ❌ Hardcoded colors in components
+- ✅ Centralized color management in theme files
+
+## CSS Class Usage Audit
+Regularly audit CSS classes to ensure they are being used and remove redundant styles.
+
+**Patterns:**
+- Verify all CSS classes are referenced in components
+- Remove unused CSS classes during cleanup
+- Check for redundant or duplicate styles
+- Maintain clean and minimal CSS
+
+**Examples:**
+- ❌ Unused CSS classes: `.topbar` (not used in component)
+- ✅ Used CSS classes: `.summary` (referenced in component)
+- ❌ Redundant styles: Multiple classes with same properties
+- ✅ Clean styles: Single, purposeful class definitions
+
+## Debugging Code Removal
+Remove all debugging and testing code from production builds. Keep only essential error logging.
+
+**Patterns:**
+- Remove console.log statements from production code
+- Remove test functions and debugging utilities
+- Keep only essential error logging (console.error for critical errors)
+- Clean up commented-out debugging code
+
+**Examples:**
+- ❌ Debug code: `console.log('User settings:', settings)`
+- ✅ Essential logging: `console.error('Error loading settings:', error)`
+- ❌ Test functions: `testWallpaper()` function
+- ✅ Production code: Clean, focused functionality

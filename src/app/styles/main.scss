@@ -1,0 +1,35 @@
+// 7-1 SCSS Architecture Main File
+// This file imports all SHARED/GLOBAL SCSS files only
+
+// 1. Abstracts
+// SCSS variables, functions, mixins, placeholders
+// @use 'abstracts/variables';
+// @use 'abstracts/functions';
+// @use 'abstracts/mixins';
+// @use 'abstracts/placeholders';
+
+// 2. Vendors
+// Third-party CSS libraries and frameworks
+@use 'vendors/normalize';
+
+// 3. Base
+@use 'base/base';
+
+// 4. Layout (shared layout styles only)
+@use 'layout/grid';
+
+// 5. Components (shared utility classes only)
+@use 'components/utilities';
+
+// 6. Pages
+// Page-specific styles
+// @use 'pages/home';
+// @use 'pages/about';
+
+// 7. Themes
+// Theme variations (dark/light mode, etc.)
+// @use 'themes/dark';
+// @use 'themes/light';
+
+// Note: Component-specific styles are now in their respective component files
+// using CSS modules or component-scoped styles
